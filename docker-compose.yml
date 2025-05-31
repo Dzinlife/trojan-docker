@@ -1,20 +1,20 @@
-version: '2'
+version: "2"
 services:
   nginx:
     hostname: NGINX
     container_name: nginx
-    build: 
+    build:
       context: ./nginx
       dockerfile: ./Dockerfile
       args:
         - domain=${domain}
     volumes:
-      - ./cert/:/etc/nginx/cert/
-      - ./nginx/html:/usr/share/nginx/html
+      # - ./cert/:/etc/nginx/cert/
+      # - ./nginx/html:/usr/share/nginx/html
     ports:
       - "80:80"
       - "8443:8443"
-    networks: 
+    networks:
       vpn:
         ipv4_address: 172.168.22.2
     restart: on-failure
@@ -22,28 +22,27 @@ services:
   trojan:
     hostname: TROJAN
     container_name: trojan
-    build: 
+    build:
       context: ./trojan
       dockerfile: ./Dockerfile
       args:
         - password=${password}
     volumes:
-      - ./cert/:/usr/local/etc/trojan/cert/
+      # - ./cert/:/usr/local/etc/trojan/cert/
     ports:
       - "443:443"
-    networks: 
+    networks:
       vpn:
         ipv4_address: 172.168.22.3
-    depends_on: 
+    depends_on:
       - nginx
     restart: on-failure
 
-  
 networks:
   vpn:
     driver: bridge
     ipam:
       driver: default
       config:
-        - subnet:  172.168.22.0/24
+        - subnet: 172.168.22.0/24
           gateway: 172.168.22.1
