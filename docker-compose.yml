@@ -1,23 +1,23 @@
 version: "2"
 services:
-  nginx:
-    hostname: NGINX
-    container_name: nginx
-    build:
-      context: ./nginx
-      dockerfile: ./Dockerfile
-      args:
-        - domain=${domain}
-    volumes:
-      # - ./cert/:/etc/nginx/cert/
-      # - ./nginx/html:/usr/share/nginx/html
-    ports:
-      - "80:80"
-      - "8443:8443"
-    networks:
-      vpn:
-        ipv4_address: 172.168.22.2
-    restart: on-failure
+  # nginx:
+  #   hostname: NGINX
+  #   container_name: nginx
+  #   build:
+  #     context: ./nginx
+  #     dockerfile: ./Dockerfile
+  #     args:
+  #       - domain=${domain}
+  #   volumes:
+  #     # - ./cert/:/etc/nginx/cert/
+  #     # - ./nginx/html:/usr/share/nginx/html
+  #   ports:
+  #     - "80:80"
+  #     - "8443:8443"
+  #   networks:
+  #     vpn:
+  #       ipv4_address: 172.168.22.2
+  #   restart: on-failure
 
   trojan:
     hostname: TROJAN
@@ -29,8 +29,8 @@ services:
         - password=${password}
     volumes:
       # - ./cert/:/usr/local/etc/trojan/cert/
-    ports:
-      - "443:443"
+    # ports:
+    #   - "443:443"
     networks:
       vpn:
         ipv4_address: 172.168.22.3
